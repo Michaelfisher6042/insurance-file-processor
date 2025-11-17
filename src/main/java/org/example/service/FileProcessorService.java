@@ -48,7 +48,7 @@ public class FileProcessorService {
         this.requestDetailsRepository = requestDetailsRepository;
     }
 
-    @Scheduled(fixedDelayString = "${app.poll-interval-ms:6000}", initialDelayString = "${app.initial-delay-ms:0}")
+    @Scheduled(fixedDelayString = "${app.poll-interval-ms:600000}", initialDelayString = "${app.initial-delay-ms:0}")
     public void pollFolder() {
         try {
             log.debug("Scheduled poll triggered");
