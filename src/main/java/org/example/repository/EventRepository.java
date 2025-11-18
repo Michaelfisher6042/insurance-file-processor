@@ -1,6 +1,6 @@
 package org.example.repository;
 
-import org.example.model.EventEntity;
+import org.example.entities.EventEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 

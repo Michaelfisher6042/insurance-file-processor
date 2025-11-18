@@ -1,9 +1,11 @@
 
 import org.example.controller.ProductsController;
-import org.example.model.EventEntity;
-import org.example.model.ProductEntity;
-import org.example.model.RequestDetailsEntity;
+import org.example.domain.InsuredProductsResponse;
+import org.example.entities.EventEntity;
+import org.example.entities.ProductEntity;
+import org.example.entities.RequestDetailsEntity;
 import org.example.repository.EventRepository;
+import org.example.service.ProductsService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,7 +28,7 @@ public class ProductsControllerTest {
     private EventRepository eventRepository;
 
     @InjectMocks
-    private ProductsController productsController;
+    private ProductsService productsService;
 
     @Test
     void testGetProductsByInsured_NoEventsFound() {
@@ -35,7 +37,7 @@ public class ProductsControllerTest {
         when(eventRepository.findByInsuredId(insuredId)).thenReturn(Collections.emptyList());
 
         // Act
-        ResponseEntity<?> response = productsController.getProductsByInsured(insuredId);
+        ResponseEntity<?> response = productsService.getProductsByInsured(insuredId);
 
         // Assert
         assertEquals(404, response.getStatusCodeValue());
@@ -64,11 +66,11 @@ public class ProductsControllerTest {
         when(eventRepository.findByInsuredId(insuredId)).thenReturn(List.of(event));
 
         // Act
-        ResponseEntity<?> response = productsController.getProductsByInsured(insuredId);
+        ResponseEntity<?> response = productsService.getProductsByInsured(insuredId);
 
         // Assert
         assertEquals(200, response.getStatusCodeValue());
-        ProductsController.InsuredProductsResponse body = (ProductsController.InsuredProductsResponse) response.getBody();
+        InsuredProductsResponse body = (InsuredProductsResponse) response.getBody();
         assertNotNull(body);
         assertEquals(insuredId, body.insuredId);
         assertEquals(1, body.groups.size());
@@ -97,11 +99,11 @@ public class ProductsControllerTest {
         when(eventRepository.findByInsuredId(insuredId)).thenReturn(List.of(event));
 
         // Act
-        ResponseEntity<?> response = productsController.getProductsByInsured(insuredId);
+        ResponseEntity<?> response = productsService.getProductsByInsured(insuredId);
 
         // Assert
         assertEquals(200, response.getStatusCodeValue());
-        ProductsController.InsuredProductsResponse body = (ProductsController.InsuredProductsResponse) response.getBody();
+        InsuredProductsResponse body = (InsuredProductsResponse) response.getBody();
         assertNotNull(body);
         assertEquals(insuredId, body.insuredId);
         assertEquals(1, body.groups.size());
@@ -125,11 +127,11 @@ public class ProductsControllerTest {
         when(eventRepository.findByInsuredId(insuredId)).thenReturn(List.of(event));
 
         // Act
-        ResponseEntity<?> response = productsController.getProductsByInsured(insuredId);
+        ResponseEntity<?> response = productsService.getProductsByInsured(insuredId);
 
         // Assert
         assertEquals(200, response.getStatusCodeValue());
-        ProductsController.InsuredProductsResponse body = (ProductsController.InsuredProductsResponse) response.getBody();
+        InsuredProductsResponse body = (InsuredProductsResponse) response.getBody();
         assertNotNull(body);
         assertEquals(insuredId, body.insuredId);
         assertEquals(1, body.groups.size());
@@ -173,11 +175,11 @@ public class ProductsControllerTest {
         when(eventRepository.findByInsuredId(insuredId)).thenReturn(List.of(event1, event2));
 
         // Act
-        ResponseEntity<?> response = productsController.getProductsByInsured(insuredId);
+        ResponseEntity<?> response = productsService.getProductsByInsured(insuredId);
 
         // Assert
         assertEquals(200, response.getStatusCodeValue());
-        ProductsController.InsuredProductsResponse body = (ProductsController.InsuredProductsResponse) response.getBody();
+        InsuredProductsResponse body = (InsuredProductsResponse) response.getBody();
         assertNotNull(body);
         assertEquals(insuredId, body.insuredId);
         assertEquals(2, body.groups.size());
@@ -219,11 +221,11 @@ public class ProductsControllerTest {
         when(eventRepository.findByInsuredId(insuredId)).thenReturn(List.of(event));
 
         // Act
-        ResponseEntity<?> response = productsController.getProductsByInsured(insuredId);
+        ResponseEntity<?> response = productsService.getProductsByInsured(insuredId);
 
         // Assert
         assertEquals(200, response.getStatusCodeValue());
-        ProductsController.InsuredProductsResponse body = (ProductsController.InsuredProductsResponse) response.getBody();
+        InsuredProductsResponse body = (InsuredProductsResponse) response.getBody();
         assertNotNull(body);
         assertEquals(insuredId, body.insuredId);
         assertEquals(1, body.groups.size());
