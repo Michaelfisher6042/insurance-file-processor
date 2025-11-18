@@ -4,37 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d73f1305-6ef3-4e77-844c-00e71ef111c4" name="Changes" comment="initial commit &amp; upload all dev is already">
-      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/config/ObjectMapperConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/CompanyGroup.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/InsuredProductsResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/domain/ProductResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/BackupService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/FileScheduledService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/ProductsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/RequestDetailsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/service/XmlDirectoryProcessor.java" afterDir="false" />
+    <list default="true" id="d73f1305-6ef3-4e77-844c-00e71ef111c4" name="Changes" comment="rename model packages and update entity imports;&#10; &#10;add new domain classes for product responses">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/ProductsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/ProductsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/EventEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entities/EventEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/ProductEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entities/ProductEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/RequestDetailsEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/entities/RequestDetailsEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/EventRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/EventRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/ProductRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/repository/RequestDetailsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/RequestDetailsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/FileProcessorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/FileProcessorService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/xml/EventDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/xml/EventDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/xml/ProductDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/xml/ProductDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/xml/RequestDetailsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/xml/RequestDetailsDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/xml/RootRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/xml/RootRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/FileProcessorServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/FileProcessorServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ProductsControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ProductsControllerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -252,19 +223,39 @@
       <option name="project" value="LOCAL‎" />
       <updated>1763406314042</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL‎-00002" summary="rename model packages and update entity imports;&#10; &#10;add new domain classes for product responses">
+      <option name="closed" value="true" />
+      <created>1763424260464</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL‎-00002" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1763424260465</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial commit &amp; upload all dev is already" />
-    <option name="LAST_COMMIT_MESSAGE" value="initial commit &amp; upload all dev is already" />
+    <MESSAGE value="rename model packages and update entity imports;&#10; &#10;add new domain classes for product responses" />
+    <option name="LAST_COMMIT_MESSAGE" value="rename model packages and update entity imports;&#10; &#10;add new domain classes for product responses" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/Main.java</url>
-          <line>15</line>
+          <line>12</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">

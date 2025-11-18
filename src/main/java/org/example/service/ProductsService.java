@@ -4,11 +4,11 @@ import lombok.AllArgsConstructor;
 import org.example.domain.CompanyGroup;
 import org.example.domain.InsuredProductsResponse;
 import org.example.domain.ProductResponse;
+import org.example.dto.EventDto;
+import org.example.dto.ProductDto;
 import org.example.entities.EventEntity;
 import org.example.entities.ProductEntity;
 import org.example.repository.EventRepository;
-import org.example.xml.EventDto;
-import org.example.xml.ProductDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class ProductsService {
@@ -24,7 +25,9 @@ public class ProductsService {
 
     public ResponseEntity<?> getProductsByInsured(String insuredId) {
         List<EventEntity> events = eventRepository.findByInsuredId(insuredId);
-        if (events.isEmpty()) return ResponseEntity.notFound().build();
+        if (events.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
 
         Map<String, List<ProductResponse>> grouped = new HashMap<>();
         for (EventEntity e : events) {
@@ -66,8 +69,16 @@ public class ProductsService {
         } catch (Exception ex) {
             p.setPrice(null);
         }
-        try { p.setStartDate(LocalDate.parse(pd.getStartDate())); } catch (Exception ex) { p.setStartDate(null); }
-        try { p.setEndDate(LocalDate.parse(pd.getEndDate())); } catch (Exception ex) { p.setEndDate(null); }
+        try {
+            p.setStartDate(LocalDate.parse(pd.getStartDate()));
+        } catch (Exception ex) {
+            p.setStartDate(null);
+        }
+        try {
+            p.setEndDate(LocalDate.parse(pd.getEndDate()));
+        } catch (Exception ex) {
+            p.setEndDate(null);
+        }
         p.setEvent(e);
         return p;
     }

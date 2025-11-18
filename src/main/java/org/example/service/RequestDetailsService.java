@@ -5,8 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.entities.EventEntity;
 import org.example.entities.ProductEntity;
 import org.example.entities.RequestDetailsEntity;
-import org.example.xml.EventDto;
-import org.example.xml.RootRequest;
+import org.example.dto.EventDto;
+import org.example.entities.XmlRootRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,7 +21,7 @@ public class RequestDetailsService {
     private final ProductsService productsService;
     private final DateTimeFormatter acceptDateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSSSS");
 
-    public RequestDetailsEntity getRequestDetailsEntity(RootRequest root) {
+    public RequestDetailsEntity getRequestDetailsEntity(XmlRootRequest root) {
         RequestDetailsEntity rd = new RequestDetailsEntity();
         rd.setId(root.getRequestDetails().getId());
         // parse acceptDate tolerant

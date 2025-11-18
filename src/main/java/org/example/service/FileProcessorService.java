@@ -3,17 +3,14 @@ package org.example.service;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.entities.RequestDetailsEntity;
 import org.example.repository.RequestDetailsRepository;
-import org.example.xml.RootRequest;
-import org.springframework.beans.factory.annotation.Value;
+import org.example.entities.XmlRootRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.*;
 
@@ -35,7 +32,7 @@ public class FileProcessorService {
             if (isFilesAreUnreadable(path)) return;
 
             try (InputStream is = Files.newInputStream(path, StandardOpenOption.READ)) {
-                RootRequest root = xmlMapper.readValue(is, RootRequest.class);
+                XmlRootRequest root = xmlMapper.readValue(is, XmlRootRequest.class);
                 if (root == null || root.getRequestDetails() == null) {
                     log.warn("Skipping file, no requestDetails: {}", path);
                     backupService.tryMoveToBackup(path);

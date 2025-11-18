@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class XmlDirectoryProcessor {
+public class FileBatchProcessor {
 
     @Value("${app.input-dir:input}")
     private String inputDir;

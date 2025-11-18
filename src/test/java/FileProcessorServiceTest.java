@@ -2,7 +2,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.example.entities.RequestDetailsEntity;
 import org.example.repository.RequestDetailsRepository;
 import org.example.service.*;
-import org.example.xml.RootRequest;
+import org.example.entities.XmlRootRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,7 +35,7 @@ public class FileProcessorServiceTest {
 
     private FileProcessorService fileProcessorService;
 
-    private XmlDirectoryProcessor xmlDirectoryProcessor;
+    private FileBatchProcessor fileBatchProcessor;
 
     private FileScheduledService fileScheduledService;
 
@@ -47,12 +47,12 @@ public class FileProcessorServiceTest {
         FileProcessorService realFileProcessorService = new FileProcessorService(requestDetailsRepository, requestDetailsService, backupService);
         fileProcessorService = spy(realFileProcessorService);
         ReflectionTestUtils.setField(fileProcessorService, "xmlMapper", xmlMapper);
-        xmlDirectoryProcessor = new XmlDirectoryProcessor(fileProcessorService);
+        fileBatchProcessor = new FileBatchProcessor(fileProcessorService);
         Path testInput = Paths.get("test-input").toAbsolutePath();
-        ReflectionTestUtils.setField(xmlDirectoryProcessor, "inputDir", testInput.toString());
+        ReflectionTestUtils.setField(fileBatchProcessor, "inputDir", testInput.toString());
         Path testBackup = Paths.get("test-backup").toAbsolutePath();
         ReflectionTestUtils.setField(backupService, "backupDir", testBackup.toString());
-        fileScheduledService = new FileScheduledService(xmlDirectoryProcessor);
+        fileScheduledService = new FileScheduledService(fileBatchProcessor);
         mockPath = mock(Path.class);
         mockFilePath = mock(Path.class);
     }
@@ -97,7 +97,7 @@ public class FileProcessorServiceTest {
             when(mockStream.iterator()).thenReturn(List.<Path>of().iterator());
             mockedFiles.when(() -> Files.newDirectoryStream(mockPath, "*.xml")).thenReturn(mockStream);
 
-            xmlDirectoryProcessor.processFiles();
+            fileBatchProcessor.processFiles();
 
             mockedFiles.verify(() -> Files.createDirectories(mockPath));
         }
@@ -114,7 +114,7 @@ public class FileProcessorServiceTest {
             doThrow(new IOException("Test IO")).when(mockStream).close();
             mockedFiles.when(() -> Files.newDirectoryStream(mockPath, "*.xml")).thenReturn(mockStream);
 
-            xmlDirectoryProcessor.processFiles();
+            fileBatchProcessor.processFiles();
 
             // Should log error
         }
@@ -130,7 +130,7 @@ public class FileProcessorServiceTest {
             when(mockStream.iterator()).thenReturn(List.<Path>of().iterator());
             mockedFiles.when(() -> Files.newDirectoryStream(mockPath, "*.xml")).thenReturn(mockStream);
 
-            xmlDirectoryProcessor.processFiles();
+            fileBatchProcessor.processFiles();
 
             mockedFiles.verify(() -> Files.createDirectories(mockPath), never());
         }
@@ -152,13 +152,13 @@ public class FileProcessorServiceTest {
             mockedFiles.when(() -> Files.isReadable(mockFilePath)).thenReturn(true);
             InputStream mockIs = mock(InputStream.class);
             mockedFiles.when(() -> Files.newInputStream(any(Path.class), any())).thenReturn(mockIs);
-            when(xmlMapper.readValue(any(InputStream.class), eq(RootRequest.class))).thenReturn(null);
+            when(xmlMapper.readValue(any(InputStream.class), eq(XmlRootRequest.class))).thenReturn(null);
             lenient().when(mockPath.resolve(any(Path.class))).thenReturn(mockPath);
             mockedFiles.when(() -> Files.move(any(Path.class), any(Path.class))).then(invocation -> null);
 
-            xmlDirectoryProcessor.processFiles();
+            fileBatchProcessor.processFiles();
 
-            verify(xmlMapper).readValue(any(InputStream.class), eq(RootRequest.class));
+            verify(xmlMapper).readValue(any(InputStream.class), eq(XmlRootRequest.class));
         }
     }
 
@@ -177,10 +177,10 @@ public class FileProcessorServiceTest {
             mockedFiles.when(() -> Files.isReadable(mockFilePath)).thenReturn(true);
             InputStream mockIs = mock(InputStream.class);
             mockedFiles.when(() -> Files.newInputStream(any(Path.class), any())).thenReturn(mockIs);
-            when(xmlMapper.readValue(any(InputStream.class), eq(RootRequest.class))).thenReturn(null);
+            when(xmlMapper.readValue(any(InputStream.class), eq(XmlRootRequest.class))).thenReturn(null);
             mockedFiles.when(() -> Files.move(any(Path.class), any(Path.class))).then(invocation -> null);
 
-            xmlDirectoryProcessor.processFiles();
+            fileBatchProcessor.processFiles();
 
             verify(requestDetailsRepository, never()).save(any());
         }
@@ -202,10 +202,10 @@ public class FileProcessorServiceTest {
             mockedFiles.when(() -> Files.isReadable(mockFilePath)).thenReturn(true);
             InputStream mockIs = mock(InputStream.class);
             mockedFiles.when(() -> Files.newInputStream(any(Path.class), any())).thenReturn(mockIs);
-            RootRequest root = new RootRequest();
+            XmlRootRequest root = new XmlRootRequest();
             root.setRequestDetails(null);
 
-            xmlDirectoryProcessor.processFiles();
+            fileBatchProcessor.processFiles();
 
             verify(requestDetailsRepository, never()).save(any());
         }
@@ -227,10 +227,10 @@ public class FileProcessorServiceTest {
             mockedFiles.when(() -> Files.isReadable(mockFilePath)).thenReturn(true);
             InputStream mockIs = mock(InputStream.class);
             mockedFiles.when(() -> Files.newInputStream(any(Path.class), any())).thenReturn(mockIs);
-            when(xmlMapper.readValue(any(InputStream.class), eq(RootRequest.class))).thenThrow(new IOException("Read error"));
+            when(xmlMapper.readValue(any(InputStream.class), eq(XmlRootRequest.class))).thenThrow(new IOException("Read error"));
             mockedFiles.when(() -> Files.move(any(Path.class), any(Path.class))).then(invocation -> null);
 
-            xmlDirectoryProcessor.processFiles();
+            fileBatchProcessor.processFiles();
 
             verify(requestDetailsRepository, never()).save(any());
         }
@@ -253,19 +253,19 @@ public class FileProcessorServiceTest {
             mockedFiles.when(() -> Files.isReadable(mockFilePath)).thenReturn(true);
             InputStream mockIs = mock(InputStream.class);
             mockedFiles.when(() -> Files.newInputStream(any(Path.class), any())).thenReturn(mockIs);
-            RootRequest root = new RootRequest();
-            org.example.xml.RequestDetailsDto rdDto = new org.example.xml.RequestDetailsDto();
+            XmlRootRequest root = new XmlRootRequest();
+            org.example.dto.RequestDetailsDto rdDto = new org.example.dto.RequestDetailsDto();
             rdDto.setId("rd1");
             rdDto.setAcceptDate("2023-01-01 12:00:00.000000000");
             rdDto.setSourceCompany("CompanyA");
             root.setRequestDetails(rdDto);
             root.setEvents(List.of());
-            when(xmlMapper.readValue(any(InputStream.class), eq(RootRequest.class))).thenReturn(root);
+            when(xmlMapper.readValue(any(InputStream.class), eq(XmlRootRequest.class))).thenReturn(root);
             RequestDetailsEntity entity = new RequestDetailsEntity();
             when(requestDetailsService.getRequestDetailsEntity(root)).thenReturn(entity);
             mockedFiles.when(() -> Files.move(any(Path.class), any(Path.class))).then(invocation -> null);
 
-            xmlDirectoryProcessor.processFiles();
+            fileBatchProcessor.processFiles();
 
             verify(requestDetailsRepository).save(entity);
         }
@@ -288,7 +288,7 @@ public class FileProcessorServiceTest {
             mockedFiles.when(() -> Files.newInputStream(any(Path.class), any())).thenThrow(new AccessDeniedException("Access denied"));
             mockedFiles.when(() -> Files.move(any(Path.class), any(Path.class))).then(invocation -> null);
 
-             xmlDirectoryProcessor.processFiles();
+             fileBatchProcessor.processFiles();
 
             verify(requestDetailsRepository, never()).save(any());
         }
@@ -311,7 +311,7 @@ public class FileProcessorServiceTest {
             mockedFiles.when(() -> Files.newInputStream(any(Path.class), any())).thenThrow(new RuntimeException("General error"));
             mockedFiles.when(() -> Files.move(any(Path.class), any(Path.class))).then(invocation -> null);
 
-            xmlDirectoryProcessor.processFiles();
+            fileBatchProcessor.processFiles();
 
             verify(requestDetailsRepository, never()).save(any());
         }
@@ -330,7 +330,7 @@ public class FileProcessorServiceTest {
             mockedFiles.when(() -> Files.newDirectoryStream(mockPath, "*.xml")).thenReturn(mockStream);
 
             mockedFiles.when(() -> Files.exists(mockFilePath)).thenReturn(false); // File not exists
-            xmlDirectoryProcessor.processFiles();
+            fileBatchProcessor.processFiles();
 
             verify(requestDetailsRepository, never()).save(any());
         }
