@@ -65,18 +65,38 @@ Example response:
 
 ```json
 {
-  "sourceCompany1": [
-    {
-      "productId": "123",
-      "productName": "Product A"
-    }
-  ],
-  "sourceCompany2": [
-    {
-      "productId": "456",
-      "productName": "Product B"
-    }
-  ]
+    "insuredId": "02002212",
+    "groups": [
+        {
+            "sourceCompany": "Menora",
+            "products": [
+                {
+                    "id": "3f82ba33-dd7e-4cb9-b5aa-42f3d1779f59",
+                    "type": "policy-a",
+                    "price": 2000.00,
+                    "startDate": "2024-05-30",
+                    "endDate": "2025-04-30",
+                    "eventId": "471b29e7-a323-447b-88d8-935737e9ffd4"
+                },
+                {
+                    "id": "b74ba4ab-d51c-45e5-a72c-ffb516638d5a",
+                    "type": "policy-a",
+                    "price": 2500.00,
+                    "startDate": "2024-07-30",
+                    "endDate": "2025-06-30",
+                    "eventId": "471b29e7-a323-447b-88d8-935737e9ffd4"
+                },
+                {
+                    "id": "404b5ed8-34c3-4297-bbff-031ae03605ab",
+                    "type": "policy-c",
+                    "price": 3000.00,
+                    "startDate": "2021-07-30",
+                    "endDate": "2022-06-30",
+                    "eventId": "26238a4d-72b8-4da4-b268-35bfa85e10be"
+                }
+            ]
+        }
+    ]
 }
 ```
 
